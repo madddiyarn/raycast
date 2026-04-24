@@ -28,11 +28,11 @@ export default async function Home() {
         </p>
         
         <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <Link href="/pipeline" className="inline-flex items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-700 text-white px-8 h-14 text-base font-medium shadow-sm transition-colors">
-            Посмотреть демо <ArrowRight className="ml-2 w-5 h-5" />
+          <Link href="/pipeline" className="inline-flex items-center justify-center rounded-2xl bg-indigo-600 hover:bg-slate-900 text-white px-10 h-14 text-lg font-bold shadow-xl shadow-indigo-100 transition-all hover:-translate-y-1 active:scale-95 group">
+            Посмотреть демо <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
-          <Link href="/vacancies" className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-8 h-14 text-base font-medium text-slate-900 shadow-sm hover:bg-slate-50 transition-colors">
-            Открыть список вакансий
+          <Link href="/vacancies" className="inline-flex items-center justify-center rounded-2xl border-2 border-slate-100 bg-white px-10 h-14 text-lg font-bold text-slate-900 shadow-lg shadow-slate-100 transition-all hover:border-indigo-200 hover:bg-slate-50 hover:-translate-y-1 active:scale-95">
+            Открыть вакансии
           </Link>
         </div>
       </section>
