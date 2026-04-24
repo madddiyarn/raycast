@@ -69,7 +69,7 @@ export function Navbar() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-slate-100 bg-white/80 backdrop-blur-md">
+    <nav key={user?.id || "guest"} className="sticky top-0 z-50 w-full border-b border-slate-100 bg-white/80 backdrop-blur-md">
       <div className="container max-w-7xl mx-auto flex h-16 items-center justify-between px-4 sm:px-8">
         
         {/* Brand */}
@@ -116,36 +116,43 @@ export function Navbar() {
 
                <AnimatePresence>
                  {showDropdown && (
-                   <motion.div 
-                     initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                     transition={{ duration: 0.15 }}
-                     className="absolute right-0 top-full mt-2 w-56 bg-white border border-slate-100 rounded-2xl shadow-xl py-2 z-50"
-                    >
-                     <div className="px-4 py-3 border-b border-slate-100 mb-1">
-                       <p className="text-sm font-extrabold text-slate-900">{user.fullName}</p>
-                       <p className="text-xs text-slate-500 font-medium">{user.role === "candidate" ? "Соискатель" : user.role === "employer" ? "Работодатель" : "Администратор"}</p>
-                     </div>
-                     
-                     {user.role === "candidate" ? (
-                       <>
-                         <Link href="/profile" onClick={() => setShowDropdown(false)} className="flex items-center gap-2 px-4 py-2 hover:bg-slate-50 text-sm font-bold text-slate-700"><UserIcon className="w-4 h-4 text-slate-400" /> Мой профиль</Link>
-                         <Link href="/interviews" onClick={() => setShowDropdown(false)} className="flex items-center gap-2 px-4 py-2 hover:bg-slate-50 text-sm font-bold text-slate-700"><Calendar className="w-4 h-4 text-slate-400" /> Собеседования</Link>
-                         <Link href="/ratings" onClick={() => setShowDropdown(false)} className="flex items-center gap-2 px-4 py-2 hover:bg-slate-50 text-sm font-bold text-slate-700"><Star className="w-4 h-4 text-slate-400" /> Work Score</Link>
-                       </>
-                     ) : (
-                       <>
-                         <Link href="/employer" onClick={() => setShowDropdown(false)} className="flex items-center gap-2 px-4 py-2 hover:bg-slate-50 text-sm font-bold text-slate-700"><Briefcase className="w-4 h-4 text-slate-400" /> Кабинет</Link>
-                         <Link href="/interviews" onClick={() => setShowDropdown(false)} className="flex items-center gap-2 px-4 py-2 hover:bg-slate-50 text-sm font-bold text-slate-700"><Calendar className="w-4 h-4 text-slate-400" /> Собеседования</Link>
-                         <Link href="/ratings" onClick={() => setShowDropdown(false)} className="flex items-center gap-2 px-4 py-2 hover:bg-slate-50 text-sm font-bold text-slate-700"><Shield className="w-4 h-4 text-slate-400" /> Trust Score</Link>
-                       </>
-                     )}
-                     
-                     <button onClick={() => { setShowDropdown(false); handleLogout(); }} className="w-full flex items-center gap-2 px-4 py-2 hover:bg-red-50 text-sm font-bold text-red-600 mt-1 border-t border-slate-100 pt-2 transition-colors">
-                       <LogOut className="w-4 h-4" /> Выйти
-                     </button>
-                   </motion.div>
+                   <>
+                     {/* Backdrop for closure */}
+                     <div 
+                       className="fixed inset-0 z-40 bg-transparent" 
+                       onClick={() => setShowDropdown(false)}
+                     />
+                     <motion.div 
+                       initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                       animate={{ opacity: 1, y: 0, scale: 1 }}
+                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                       transition={{ duration: 0.15 }}
+                       className="absolute right-0 top-full mt-2 w-56 bg-white border border-slate-100 rounded-2xl shadow-xl py-2 z-50"
+                      >
+                       <div className="px-4 py-3 border-b border-slate-100 mb-1">
+                         <p className="text-sm font-extrabold text-slate-900">{user.fullName}</p>
+                         <p className="text-xs text-slate-500 font-medium">{user.role === "candidate" ? "Соискатель" : user.role === "employer" ? "Работодатель" : "Администратор"}</p>
+                       </div>
+                       
+                       {user.role === "candidate" ? (
+                         <>
+                           <Link href="/profile" onClick={() => setShowDropdown(false)} className="flex items-center gap-2 px-4 py-2 hover:bg-slate-50 text-sm font-bold text-slate-700"><UserIcon className="w-4 h-4 text-slate-400" /> Мой профиль</Link>
+                           <Link href="/interviews" onClick={() => setShowDropdown(false)} className="flex items-center gap-2 px-4 py-2 hover:bg-slate-50 text-sm font-bold text-slate-700"><Calendar className="w-4 h-4 text-slate-400" /> Собеседования</Link>
+                           <Link href="/ratings" onClick={() => setShowDropdown(false)} className="flex items-center gap-2 px-4 py-2 hover:bg-slate-50 text-sm font-bold text-slate-700"><Star className="w-4 h-4 text-slate-400" /> Work Score</Link>
+                         </>
+                       ) : (
+                         <>
+                           <Link href="/employer" onClick={() => setShowDropdown(false)} className="flex items-center gap-2 px-4 py-2 hover:bg-slate-50 text-sm font-bold text-slate-700"><Briefcase className="w-4 h-4 text-slate-400" /> Кабинет</Link>
+                           <Link href="/interviews" onClick={() => setShowDropdown(false)} className="flex items-center gap-2 px-4 py-2 hover:bg-slate-50 text-sm font-bold text-slate-700"><Calendar className="w-4 h-4 text-slate-400" /> Собеседования</Link>
+                           <Link href="/ratings" onClick={() => setShowDropdown(false)} className="flex items-center gap-2 px-4 py-2 hover:bg-slate-50 text-sm font-bold text-slate-700"><Shield className="w-4 h-4 text-slate-400" /> Trust Score</Link>
+                         </>
+                       )}
+                       
+                       <button onClick={() => { setShowDropdown(false); handleLogout(); }} className="w-full flex items-center gap-2 px-4 py-2 hover:bg-red-50 text-sm font-bold text-red-600 mt-1 border-t border-slate-100 pt-2 transition-colors">
+                         <LogOut className="w-4 h-4" /> Выйти
+                       </button>
+                     </motion.div>
+                   </>
                  )}
                </AnimatePresence>
             </div>
