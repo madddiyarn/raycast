@@ -95,8 +95,12 @@ export function Navbar() {
         <div className="flex items-center gap-3 relative">
           {!user ? (
             <>
-              <Link href="/auth/login"><Button variant="ghost" className="hidden sm:flex text-sm font-bold text-slate-600 hover:text-slate-900">Войти</Button></Link>
-              <Link href="/auth/register"><Button className="bg-slate-900 hover:bg-indigo-600 text-white rounded-xl text-sm font-bold shadow-md shadow-slate-200">Создать аккаунт</Button></Link>
+              <Link href="/auth/login" className="hidden sm:flex text-sm font-bold text-slate-600 hover:text-slate-900 px-4 py-2 rounded-xl hover:bg-slate-50 transition-all">
+                Войти
+              </Link>
+              <Link href="/auth/register" className="bg-slate-900 hover:bg-indigo-600 text-white rounded-xl text-sm font-bold shadow-md shadow-slate-200 px-5 py-2.5 transition-all active:scale-95">
+                Создать аккаунт
+              </Link>
             </>
           ) : (
             <div className="relative">
