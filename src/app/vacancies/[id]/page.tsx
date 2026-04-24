@@ -11,10 +11,16 @@ import { MOCK_CANDIDATES } from "@/lib/mock-candidates";
 
 export default async function VacancyDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  let job = await prisma.job.findUnique({ where: { id } }) as any;
+  let job: any = null;
+
+  try {
+    job = await prisma.job.findUnique({ where: { id } });
+  } catch (error) {
+    console.error("Failed to fetch job details from DB:", error);
+  }
 
   if (!job) {
-    // Fallback to our hybrid mock jobs for the demo if not in DB
+    // Fallback to our hybrid mock jobs for the demo if not in DB or DB failed
     const { getHybridJobs } = require("@/lib/mock-data");
     const mockJobs = getHybridJobs([]);
     job = mockJobs.find((j: any) => j.id === id);

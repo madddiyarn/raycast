@@ -6,11 +6,17 @@ import prisma from "@/lib/prisma";
 import { VacancyCard } from "@/components/cards/VacancyCard";
 
 export default async function Home() {
-  const latestJobs = await prisma.job.findMany({
-    where: { status: "published" },
-    take: 12, // More reasonable grid size for homepage
-    orderBy: { createdAt: "desc" }
-  });
+  let latestJobs: any[] = [];
+  try {
+    latestJobs = await prisma.job.findMany({
+      where: { status: "published" },
+      take: 12,
+      orderBy: { createdAt: "desc" }
+    });
+  } catch (error) {
+    console.error("Failed to fetch latest jobs:", error);
+    // latestJobs remains empty, page won't crash
+  }
 
   return (
     <div className="flex flex-col gap-16 md:gap-24 mb-16">

@@ -69,7 +69,7 @@ export function Navbar() {
   }
 
   return (
-    <nav key={user?.id || "guest"} className="sticky top-0 z-50 w-full border-b border-slate-100 bg-white/80 backdrop-blur-md">
+    <nav className="sticky top-0 z-50 w-full border-b border-slate-100 bg-white/80 backdrop-blur-md">
       <div className="container max-w-7xl mx-auto flex h-16 items-center justify-between px-4 sm:px-8">
         
         {/* Brand */}

@@ -4,11 +4,16 @@ import { getHybridJobs } from "@/lib/mock-data";
 import { Job } from "@/lib/types";
 
 export default async function VacanciesPage() {
-  const dbJobs = await prisma.job.findMany({
-    orderBy: { createdAt: "desc" }
-  });
+  let dbJobs: any[] = [];
+  try {
+    dbJobs = await prisma.job.findMany({
+      orderBy: { createdAt: "desc" }
+    });
+  } catch (error) {
+    console.error("Failed to fetch vacancies from DB:", error);
+  }
 
-  const jobs = getHybridJobs(dbJobs as any);
+  const jobs = getHybridJobs(dbJobs);
 
   return (
     <div className="container max-w-7xl mx-auto py-8">
