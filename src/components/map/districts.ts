@@ -1,10 +1,5 @@
-/**
- * Accurate Aktau district coordinates based on the official microdistrict map.
- * Separated from the Leaflet map component so it can be imported without triggering
- * browser-only code during SSR.
- */
 export const DISTRICT_COORDS: Record<string, [number, number]> = {
-  // === SOUTH (coastal / bottom of map) ===
+  
   "1 мкр":  [43.6295, 51.1555],
   "2 мкр":  [43.6330, 51.1510],
   "3 мкр":  [43.6340, 51.1580],
@@ -17,7 +12,6 @@ export const DISTRICT_COORDS: Record<string, [number, number]> = {
   "6 мкр":  [43.6400, 51.1440],
   "7 мкр":  [43.6415, 51.1390],
 
-  // === CENTRAL ===
   "8 мкр":  [43.6430, 51.1470],
   "9 мкр":  [43.6420, 51.1370],
   "10 мкр": [43.6460, 51.1420],
@@ -28,11 +22,9 @@ export const DISTRICT_COORDS: Record<string, [number, number]> = {
   "22 мкр": [43.6450, 51.1530],
   "24 мкр": [43.6530, 51.1520],
 
-  // === WEST COAST ===
   "15 мкр": [43.6600, 51.1240],
   "17 мкр": [43.6620, 51.1270],
 
-  // === MID-NORTH ===
   "16 мкр": [43.6600, 51.1350],
   "26 мкр": [43.6560, 51.1440],
   "27 мкр": [43.6580, 51.1380],
@@ -42,7 +34,6 @@ export const DISTRICT_COORDS: Record<string, [number, number]> = {
   "29а":    [43.6640, 51.1540],
   "30 мкр": [43.6660, 51.1400],
 
-  // === NORTH BELT ===
   "18 мкр": [43.6660, 51.1260],
   "18а":    [43.6660, 51.1220],
   "19 мкр": [43.6670, 51.1340],
@@ -61,14 +52,12 @@ export const DISTRICT_COORDS: Record<string, [number, number]> = {
   "34а":    [43.6740, 51.1350],
   "35 мкр": [43.6760, 51.1380],
 
-  // === EAST / SPECIAL ===
   "Шыгыс-1":   [43.6730, 51.1520],
   "Шыгыс-2":   [43.6750, 51.1540],
   "Шыгыс-3":   [43.6760, 51.1570],
   "Приозерный": [43.6430, 51.1600],
   "Приморский": [43.6260, 51.1650],
 
-  // === LEGACY NAMED DISTRICTS ===
   "Самал":    [43.6490, 51.1500],
   "Болашак":  [43.6540, 51.1560],
   "Нурсат":   [43.6500, 51.1550],
