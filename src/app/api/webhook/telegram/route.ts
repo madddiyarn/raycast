@@ -3,6 +3,14 @@ import prisma from "@/lib/prisma";
 
 export async function POST(req: Request) {
   try {
+    // 0. Безопасность: проверяем секретный токен
+    const { searchParams } = new URL(req.url);
+    const secret = searchParams.get("secret");
+    if (secret !== process.env.TELEGRAM_WEBHOOK_SECRET) {
+      console.warn("Unauthorized webhook attempt");
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const update = await req.json();
 
     if (!update.message || !update.message.text) {
