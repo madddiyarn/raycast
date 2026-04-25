@@ -221,9 +221,9 @@ export async function POST(req: Request) {
       await tg.sendMessage(chatId, "Пожалуйста, используйте кнопки под предпросмотром вакансии для выбора действия.");
     }
 
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, version: "v2.0-ai-assistant" });
   } catch (error) {
     console.error("Webhook Error:", error);
-    return NextResponse.json({ error: "Internal Error" }, { status: 500 });
+    return NextResponse.json({ error: "Internal Error", version: "v2.0-ai-assistant" }, { status: 500 });
   }
 }
