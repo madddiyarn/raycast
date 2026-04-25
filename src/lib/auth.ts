@@ -4,7 +4,7 @@ import { User, CandidateProfile, EmployerProfile } from "./types";
  * TODO: Replace with real auth/backend API via NextAuth and Prisma
  */
 
-const LOCAL_STORAGE_KEY = "jumys_relay_mock_session";
+const LOCAL_STORAGE_KEY = "jumys_user";
 
 export async function loginUser(input: any): Promise<{ user: User }> {
   console.log("loginUser called with:", input);
