@@ -71,7 +71,6 @@ export async function POST(req: Request) {
 
     const payload = await req.json();
 
-    // --- HANDLE CALLBACK QUERIES ---
     if (payload.callback_query) {
       const { id, data, message } = payload.callback_query;
       const chatId = String(message.chat.id);
@@ -83,7 +82,6 @@ export async function POST(req: Request) {
         const jobData = (session.data as any).job;
         const improved = (session.data as any).improvedDescription;
 
-        // 1. Create the job
         const job = await prisma.job.create({
           data: {
             ...jobData,
@@ -96,7 +94,6 @@ export async function POST(req: Request) {
 
         await tg.editMessageText(chatId, message.message_id, "✅ <b>Вакансия опубликована!</b>\n\nОна уже доступна на сайте и в поиске для кандидатов.");
         
-        // 2. Candidate Matching & Notification
         try {
           const matches = await prisma.candidateProfile.findMany({
             where: {
@@ -149,7 +146,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: true });
     }
 
-    // --- HANDLE MESSAGES ---
     if (!payload.message || !payload.message.text) return NextResponse.json({ ok: true });
 
     const { text, chat } = payload.message;
@@ -160,13 +156,11 @@ export async function POST(req: Request) {
       session = await prisma.telegramSession.create({ data: { chatId, state: "IDLE" } });
     }
 
-    // Command handling
     if (text === "/start") {
       await tg.sendMessage(chatId, "👋 <b>Привет! Я ваш AI-ассистент Jumys Relay.</b>\n\nПришлите текст вакансии (даже в свободной форме), и я помогу её оформить и опубликовать.\n\nНапример:\n<i>\"Нужен бариста в 14 мкр, 2/2, 180к ақша\"</i>");
       return NextResponse.json({ ok: true });
     }
 
-    // State Machine
     if (session.state === "IDLE" || session.state === "AWAITING_INFO") {
       const isInitial = session.state === "IDLE";
       
@@ -185,12 +179,10 @@ export async function POST(req: Request) {
         return NextResponse.json({ ok: true });
       }
 
-      // Check for Suspicious Content
       if (aiResponse.job.salaryMin > 5000000 || aiResponse.job.description?.toLowerCase().includes("крипто") || aiResponse.job.description?.toLowerCase().includes("обнал")) {
         await tg.sendMessage(chatId, "⚠ <b>Внимание:</b> Вакансия выглядит подозрительно (слишком высокая зарплата или ключевые слова). Пожалуйста, убедитесь в законности предложения.");
       }
 
-      // Check for Duplicates
       const duplicate = await prisma.job.findFirst({
         where: {
           title: aiResponse.job.title,
