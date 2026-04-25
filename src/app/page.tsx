@@ -15,7 +15,7 @@ export default async function Home() {
     });
   } catch (error) {
     console.error("Failed to fetch latest jobs:", error);
-    // latestJobs remains empty, page won't crash
+    
   }
 
   return (
