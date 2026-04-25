@@ -18,7 +18,7 @@ export default function SearchClient({ initialJobs, initialCandidate }: { initia
   const [applyState, setApplyState] = useState<"idle" | "loading" | "success">("idle");
 
   useEffect(() => {
-    // Attempt to load current user from localStorage since the server doesn't have it in this MVP
+    
     const savedUser = typeof window !== "undefined" ? localStorage.getItem("jumys_user") : null;
     let candidate = initialCandidate;
     try {
