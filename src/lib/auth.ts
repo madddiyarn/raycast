@@ -1,22 +1,20 @@
 import { User, CandidateProfile, EmployerProfile } from "./types";
 
-/**
- * TODO: Replace with real auth/backend API via NextAuth and Prisma
- */
+
 
 const LOCAL_STORAGE_KEY = "jumys_user";
 
 export async function loginUser(input: any): Promise<{ user: User }> {
   console.log("loginUser called with:", input);
   
-  // Handle both phone string (from candidate login) or credentials object
+ 
   const phone = typeof input === "string" ? input : input.phone || input.email;
   const isEmployer = typeof input === "object" && (input.email?.includes("employer") || input.role === "employer");
   
   const mockUser: User = {
     id: "mock_" + Math.random().toString(36).substring(7),
     role: isEmployer ? "employer" : "candidate",
-    fullName: isEmployer ? "ТОО СпецСтрой" : "Алия Исман", // Demo data
+    fullName: isEmployer ? "ТОО СпецСтрой" : "Алия Исман", 
     telegramUsername: isEmployer ? "@specstroy_hr" : "@aliya_ism",
     phone: phone || "+7 (707) 123-45-67",
     onboardingCompleted: true, 
@@ -41,7 +39,7 @@ export async function registerUser(data: Partial<User>): Promise<{ user: User }>
     fullName: data.fullName || "Новый Пользователь",
     telegramUsername: data.telegramUsername || "",
     phone: data.phone || "",
-    onboardingCompleted: false, // New users must onboard!
+    onboardingCompleted: false,
     createdAt: new Date(),
   };
 
@@ -95,7 +93,7 @@ export async function completeCandidateOnboarding(profileData: Partial<Candidate
   const current = getCurrentUser();
   if (!current) throw new Error("Not logged in");
   
-  // Here we would save profileData to DB
+ 
   await updateUserProfile({ onboardingCompleted: true });
 }
 
