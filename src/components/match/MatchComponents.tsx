@@ -1,8 +1,6 @@
 "use client";
 
 import { MatchResult, MatchScoreBreakdown, MATCH_LEVEL_CONFIG } from "@/lib/matching";
-
-// ── ScoreBar ─────────────────────────────────────────────────────────────────
 export function ScoreBar({ value, max, color = "indigo" }: { value: number; max: number; color?: string }) {
   const pct = Math.round((value / max) * 100);
   const colorMap: Record<string, string> = {
@@ -24,7 +22,6 @@ export function ScoreBar({ value, max, color = "indigo" }: { value: number; max:
   );
 }
 
-// ── MatchLevelBadge ───────────────────────────────────────────────────────────
 export function MatchLevelBadge({ level }: { level: keyof typeof MATCH_LEVEL_CONFIG }) {
   const cfg = MATCH_LEVEL_CONFIG[level];
   return (
@@ -34,7 +31,6 @@ export function MatchLevelBadge({ level }: { level: keyof typeof MATCH_LEVEL_CON
   );
 }
 
-// ── MatchScoreCard ────────────────────────────────────────────────────────────
 export function MatchScoreCard({ result, compact = false }: { result: MatchResult; compact?: boolean }) {
   const cfg = MATCH_LEVEL_CONFIG[result.level];
 
@@ -72,7 +68,7 @@ export function MatchScoreCard({ result, compact = false }: { result: MatchResul
         </div>
       </div>
 
-      {/* Top reasons */}
+      {}
       {result.reasons.length > 0 && (
         <div className="border-t border-slate-700 px-5 py-4 space-y-1.5">
           {result.reasons.slice(0, 3).map((r, i) => (
@@ -81,7 +77,7 @@ export function MatchScoreCard({ result, compact = false }: { result: MatchResul
         </div>
       )}
 
-      {/* Warnings */}
+      {}
       {result.warnings.length > 0 && (
         <div className="border-t border-yellow-900/40 px-5 py-3 bg-yellow-950/20 space-y-1.5">
           {result.warnings.slice(0, 2).map((w, i) => (
@@ -93,7 +89,6 @@ export function MatchScoreCard({ result, compact = false }: { result: MatchResul
   );
 }
 
-// ── MatchBreakdown ────────────────────────────────────────────────────────────
 const BREAKDOWN_LABELS: Record<keyof MatchScoreBreakdown, string> = {
   location:     "Местоположение",
   category:     "Категория",
@@ -127,7 +122,6 @@ export function MatchBreakdown({ breakdown }: { breakdown: MatchScoreBreakdown }
   );
 }
 
-// ── MatchReasonList ───────────────────────────────────────────────────────────
 export function MatchReasonList({ reasons }: { reasons: string[] }) {
   if (!reasons.length) return null;
   return (
@@ -140,7 +134,6 @@ export function MatchReasonList({ reasons }: { reasons: string[] }) {
   );
 }
 
-// ── MatchWarnings ─────────────────────────────────────────────────────────────
 export function MatchWarnings({ warnings }: { warnings: string[] }) {
   if (!warnings.length) return null;
   return (
@@ -153,7 +146,6 @@ export function MatchWarnings({ warnings }: { warnings: string[] }) {
   );
 }
 
-// ── MatchDebugPanel ───────────────────────────────────────────────────────────
 export function MatchDebugPanel({ result, candidate, job }: { result: MatchResult; candidate: any; job: any }) {
   return (
     <div className="bg-slate-950 text-green-400 rounded-2xl p-6 font-mono text-xs overflow-auto max-h-[500px] shadow-2xl border border-green-900/30">
