@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import * as tg from "@/lib/telegram";
+import { Prisma } from "@prisma/client";
 
 const OPENROUTER_MODEL = "openai/gpt-4o-mini";
 
@@ -123,7 +124,10 @@ export async function POST(req: Request) {
           console.error("Match error:", matchErr);
         }
 
-        await prisma.telegramSession.update({ where: { chatId }, data: { state: "IDLE", data: null } });
+        await prisma.telegramSession.update({ 
+          where: { chatId }, 
+          data: { state: "IDLE", data: Prisma.JsonNull } 
+        });
       } 
       else if (data.startsWith("invite_matches")) {
         await tg.sendMessage(chatId, "✅ <b>Приглашения отправлены!</b>\n\nКандидаты уведомлены. Я сообщу вам, как только кто-то подтвердит участие.");
@@ -131,7 +135,10 @@ export async function POST(req: Request) {
       }
       else if (data === "cancel_job") {
         await tg.editMessageText(chatId, message.message_id, "❌ Публикация отменена. Сессия сброшена.");
-        await prisma.telegramSession.update({ where: { chatId }, data: { state: "IDLE", data: null } });
+        await prisma.telegramSession.update({ 
+          where: { chatId }, 
+          data: { state: "IDLE", data: Prisma.JsonNull } 
+        });
       }
       else if (data === "edit_job") {
         await tg.sendMessage(chatId, "Хорошо, напишите исправленные данные или просто пришлите вакансию заново.");
