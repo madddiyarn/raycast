@@ -5,10 +5,8 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { DISTRICT_COORDS, ALL_AKTAU_DISTRICTS } from "./districts";
 
-// Re-export for backward compatibility
 export { DISTRICT_COORDS, ALL_AKTAU_DISTRICTS };
 
-// Fix Leaflet default icon in Next.js (only client-side)
 if (typeof window !== "undefined") {
   delete (L.Icon.Default.prototype as any)._getIconUrl;
   L.Icon.Default.mergeOptions({
