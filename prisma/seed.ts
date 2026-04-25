@@ -70,8 +70,6 @@ async function main() {
     const line = lines[i].trim();
     if (!line) continue;
     
-    // Using simple comma split. For complex quotes we would need a proper CSV parser, 
-    // but the provided data looks clean enough for simple split.
     const cols = line.split(',');
     if (cols.length < 8) continue;
     
@@ -91,7 +89,7 @@ async function main() {
 
     let districtStr = location;
     if (districtStr.toLowerCase().includes("акт") || districtStr.toLowerCase().includes("обл")) {
-      districtStr = "Центр"; // Fallback to central point for map
+      districtStr = "Центр"; 
     }
 
     await prisma.job.create({

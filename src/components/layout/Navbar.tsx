@@ -18,21 +18,18 @@ export function Navbar() {
 
   useEffect(() => {
     setIsClient(true);
-    // Read once on mount
     setUser(getCurrentUser());
 
-    // Listen for cross-tab / same-tab storage changes so auth state stays synced
     const onStorage = () => setUser(getCurrentUser());
     window.addEventListener("storage", onStorage);
 
-    // Custom event fired by loginUser / logoutUser / registerUser
     window.addEventListener("jumys_auth_change", onStorage);
 
     return () => {
       window.removeEventListener("storage", onStorage);
       window.removeEventListener("jumys_auth_change", onStorage);
     };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); 
 
   const handleLogout = async () => {
     await logoutUser();
@@ -43,7 +40,6 @@ export function Navbar() {
   if (!isClient) return null;
   if (pathname === "/auth/register" || pathname === "/auth/login" || pathname === "/onboarding") return null;
 
-  // Role-based navigation
   let links: { name: string; href: string }[] = [];
 
   if (!user) {
@@ -72,13 +68,13 @@ export function Navbar() {
     <nav className="sticky top-0 z-50 w-full border-b border-slate-100 bg-white/80 backdrop-blur-md">
       <div className="container max-w-7xl mx-auto flex h-16 items-center justify-between px-4 sm:px-8">
         
-        {/* Brand */}
+        {}
         <Link href="/" className="flex items-center gap-2.5">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-900 text-white font-black text-sm">R</div>
           <span className="font-extrabold text-xl tracking-tight text-slate-900 leading-none">Raycast</span>
         </Link>
         
-        {/* Navigation Links */}
+        {}
         <div className="hidden md:flex items-center gap-6">
           {links.map((link) => (
              <Link 
@@ -91,7 +87,7 @@ export function Navbar() {
           ))}
         </div>
 
-        {/* User Actions */}
+        {}
         <div className="flex items-center gap-3 relative">
           {!user ? (
             <>
@@ -117,7 +113,7 @@ export function Navbar() {
                <AnimatePresence>
                  {showDropdown && (
                    <>
-                     {/* Backdrop for closure */}
+                     {}
                      <div 
                        className="fixed inset-0 z-40 bg-transparent" 
                        onClick={() => setShowDropdown(false)}

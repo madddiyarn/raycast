@@ -17,7 +17,6 @@ export const SearchVacancyCard = ({
   candidate: CandidateProfile | null;
   onApply: (j: Job) => void;
 }) => {
-  // Deterministic scoring — no Math.random
   const matchResult = candidate ? getFullMatchResult(candidate, job) : null;
   const score = matchResult?.score ?? 0;
   const matchCfg = matchResult ? MATCH_LEVEL_CONFIG[matchResult.level] : null;
@@ -30,7 +29,7 @@ export const SearchVacancyCard = ({
       animate={{ opacity: 1, y: 0 }}
       className="bg-white rounded-3xl border border-slate-100 shadow-sm p-6 relative overflow-hidden group hover:shadow-xl hover:border-indigo-100 transition-all duration-300"
     >
-      {/* Top badges row */}
+      {}
       <div className="flex justify-between items-start mb-4">
         <div className="flex flex-wrap gap-2">
           {job.sourceType === "telegram" && (
@@ -48,7 +47,7 @@ export const SearchVacancyCard = ({
               <Zap className="w-3 h-3" /> Лучшее совпадение
             </span>
           )}
-          {/* Publishability shorthand */}
+          {}
           {completeness.score >= 80 && (
             <span className="bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded-full">
               {completeness.score}% полнота
@@ -56,7 +55,7 @@ export const SearchVacancyCard = ({
           )}
         </div>
 
-        {/* Match Circle */}
+        {}
         {matchResult && (
           <div className="flex flex-col items-center shrink-0">
             <div className="relative w-12 h-12 flex items-center justify-center">
@@ -94,7 +93,7 @@ export const SearchVacancyCard = ({
         <span className="flex items-center gap-1.5"><Building2 className="w-4 h-4 text-slate-400" /> {job.category}</span>
       </div>
 
-      {/* Tags */}
+      {}
       <div className="flex gap-2 mt-3 flex-wrap">
         {job.studentFriendly && <span className="bg-violet-50 text-violet-700 px-2.5 py-0.5 rounded-full text-xs font-bold">🎓 Студентам</span>}
         {!job.experienceRequired && <span className="bg-emerald-50 text-emerald-700 px-2.5 py-0.5 rounded-full text-xs font-bold">✅ Без опыта</span>}
@@ -103,7 +102,7 @@ export const SearchVacancyCard = ({
         ))}
       </div>
 
-      {/* AI Reasons – deterministic */}
+      {}
       {matchResult && matchResult.reasons.length > 0 && (
         <div className="mt-4 p-3 rounded-xl bg-indigo-50 border border-indigo-100">
           <div className="flex items-center gap-1.5 mb-1.5">
@@ -120,7 +119,7 @@ export const SearchVacancyCard = ({
         </div>
       )}
 
-      {/* Warnings */}
+      {}
       {matchResult && matchResult.warnings.length > 0 && (
         <div className="mt-2 p-2.5 rounded-xl bg-amber-50 border border-amber-100">
           <p className="text-xs text-amber-700 font-medium">{matchResult.warnings[0]}</p>

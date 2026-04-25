@@ -3,7 +3,6 @@
 import { getPublishabilityStatus, calculateVacancyCompleteness, calculateVacancySafety, getVacancyImprovementTips } from "@/lib/vacancy-quality";
 import { ShieldCheck, ShieldAlert, ShieldX, CheckCircle2, AlertCircle } from "lucide-react";
 
-// ── VacancyQualityBadge ───────────────────────────────────────────────────────
 export function VacancyQualityBadge({ job, compact = false }: { job: any; compact?: boolean }) {
   const status = getPublishabilityStatus(job);
   const safety = calculateVacancySafety(job);
@@ -36,7 +35,7 @@ export function VacancyQualityBadge({ job, compact = false }: { job: any; compac
 
   return (
     <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 space-y-4">
-      {/* Publishability */}
+      {}
       <div>
         <p className="text-xs font-black text-slate-500 uppercase tracking-wider mb-2">Готовность к публикации</p>
         <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-sm font-bold border ${cfg.color}`}>
@@ -47,7 +46,7 @@ export function VacancyQualityBadge({ job, compact = false }: { job: any; compac
         )}
       </div>
 
-      {/* Completeness bar */}
+      {}
       <div>
         <div className="flex justify-between text-xs font-bold mb-1">
           <span className="text-slate-700">Полнота</span>
@@ -61,13 +60,13 @@ export function VacancyQualityBadge({ job, compact = false }: { job: any; compac
         </div>
       </div>
 
-      {/* Safety */}
+      {}
       <div className="flex items-center gap-2">
         {safeCfg.icon}
         <span className={`text-sm font-bold ${safeCfg.color}`}>Безопасность: {safeCfg.label}</span>
       </div>
 
-      {/* Safety flags */}
+      {}
       {safety.flags.length > 0 && (
         <div className="space-y-1">
           {safety.flags.map((f, i) => (
@@ -76,7 +75,7 @@ export function VacancyQualityBadge({ job, compact = false }: { job: any; compac
         </div>
       )}
 
-      {/* Tips */}
+      {}
       {tips.length > 0 && (
         <div className="border-t border-slate-100 pt-3 space-y-1">
           <p className="text-xs font-black text-slate-500 uppercase tracking-wider mb-1">Советы по улучшению</p>
@@ -89,7 +88,6 @@ export function VacancyQualityBadge({ job, compact = false }: { job: any; compac
   );
 }
 
-// ── CompletionBadge (inline chip) ─────────────────────────────────────────────
 export function CompletionBadge({ score }: { score: number }) {
   const color = score >= 80 ? "text-emerald-700 bg-emerald-100" : score >= 50 ? "text-amber-700 bg-amber-100" : "text-red-700 bg-red-100";
   return (
