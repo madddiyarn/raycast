@@ -2,9 +2,7 @@ import { Interview, InterviewQuestion, InterviewScorecard, InterviewPlatform, Jo
 
 const delay = (ms: number) => new Promise(r => setTimeout(r, ms));
 
-// =============================================
-// INTERVIEW CRUD (Mock / API-ready)
-// =============================================
+
 
 export async function scheduleInterview(data: {
   applicationId: string;
@@ -29,7 +27,7 @@ export async function scheduleInterview(data: {
 
 export async function rescheduleInterview(interviewId: string, date: string, time: string): Promise<Interview> {
   await delay(500);
-  // Mock: in real app, update DB
+
   return { id: interviewId, date, time, status: "rescheduled" } as any;
 }
 
@@ -43,7 +41,7 @@ export async function confirmInterview(interviewId: string): Promise<void> {
 
 export async function getInterviewsForEmployer(employerId: string): Promise<Interview[]> {
   await delay(300);
-  return []; // Mock empty for now; populated when scheduling happens
+  return []; 
 }
 
 export async function getInterviewsForCandidate(candidateId: string): Promise<Interview[]> {
@@ -51,9 +49,7 @@ export async function getInterviewsForCandidate(candidateId: string): Promise<In
   return [];
 }
 
-// =============================================
-// AI INTERVIEW QUESTION GENERATOR
-// =============================================
+
 
 const QUESTION_BANKS: Record<string, InterviewQuestion[]> = {
   HoReCa: [
@@ -86,17 +82,16 @@ const QUESTION_BANKS: Record<string, InterviewQuestion[]> = {
 };
 
 export function generateInterviewQuestions(jobIdOrCategory: string): InterviewQuestion[] {
-  // In a real app, fetch the job's category from the DB
-  // For now, return the default bank if category isn't matched
+
   return QUESTION_BANKS[jobIdOrCategory] || QUESTION_BANKS["default"];
 }
 
 export function generateInterviewQuestionsForJob(job: Partial<Job>, candidate?: Partial<CandidateProfile>): InterviewQuestion[] {
   const bank = QUESTION_BANKS[job.category || ""] || QUESTION_BANKS["default"];
 
-  // Optionally customize based on candidate
+
   if (candidate && !candidate.hasExperience) {
-    // Replace experience question with supportive variant
+   
     return bank.map(q => {
       if (q.type === "experience") {
         return {
@@ -112,9 +107,7 @@ export function generateInterviewQuestionsForJob(job: Partial<Job>, candidate?: 
   return bank;
 }
 
-// =============================================
-// AI CANDIDATE PREPARATION
-// =============================================
+
 
 export function generateCandidatePreparation(job: Partial<Job>, candidate: Partial<CandidateProfile>) {
   const tips = [
@@ -139,9 +132,6 @@ export function generateCandidatePreparation(job: Partial<Job>, candidate: Parti
   return { tips, clarify, suggestedIntro };
 }
 
-// =============================================
-// SCORECARD TEMPLATE
-// =============================================
 
 export function getEmptyScorecard(): InterviewScorecard {
   return {
