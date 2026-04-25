@@ -4,9 +4,6 @@ const prisma = new PrismaClient();
 
 async function main() {
   console.log("Cleaning up existing data...");
-  // Optional: Uncomment to clear all previous data if needed
-  // await prisma.job.deleteMany();
-  // await prisma.user.deleteMany();
 
   console.log("Seeding 5 accounts...");
   const users = [

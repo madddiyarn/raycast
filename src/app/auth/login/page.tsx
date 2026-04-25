@@ -24,12 +24,9 @@ function LoginForm() {
     setError("");
 
     try {
-      // In our mock auth, we accept any credentials for demo
-      // but let's make it look professional
       const res = await loginUser({ email, password });
       
       if (res.user) {
-        // Successful login
         if (res.user.onboardingCompleted) {
           router.push(res.user.role === "employer" ? "/employer" : "/search");
         } else {

@@ -22,5 +22,5 @@ export default function CandidateProfilePage() {
     );
   }
 
-  return null; // unreachable due to zero mock-data policy
+  return null;
 }

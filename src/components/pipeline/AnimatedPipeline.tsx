@@ -74,7 +74,7 @@ export function AnimatedPipeline({ autoRun = false }: { autoRun?: boolean }) {
                 transition={{ delay: idx * 0.1 }}
                 className="relative flex flex-col pt-6"
               >
-                {/* Connecting Line */}
+                {}
                 {idx > 0 && idx % 4 !== 0 && (
                   <div className="hidden md:block absolute top-[28px] left-[calc(-50%+1rem)] w-[calc(100%-2rem)] h-1 rounded-full bg-slate-100 z-0 overflow-hidden">
                     {(isPast || isActive) && (
@@ -122,7 +122,7 @@ export function AnimatedPipeline({ autoRun = false }: { autoRun?: boolean }) {
         </AnimatePresence>
       </div>
 
-      {/* Realtime Demo Preview */}
+      {}
       <div className="mt-16 bg-white border rounded-2xl p-6 shadow-sm min-h-[140px] flex items-center justify-center text-center relative overflow-hidden">
         {activeStep === -1 && <p className="text-slate-400 font-medium">Нажмите на кнопку запуска, чтобы увидеть как происходит магия</p>}
         {activeStep === 0 && <p className="text-lg font-mono text-slate-700">/job нужен бариста срочно 180к 2/2 студентам можно @cvaktau</p>}

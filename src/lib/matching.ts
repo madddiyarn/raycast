@@ -1,9 +1,4 @@
-/**
- * Jumys Relay — Deterministic Match Scoring Engine
- * 
- * NO Math.random anywhere. All scores are derived from real candidate/job data.
- * This module is designed to be API-ready: swap mock data for real DB records.
- */
+
 
 export interface MatchScoreBreakdown {
   location: { awarded: number; max: 20; label: string };
@@ -18,21 +13,21 @@ export interface MatchScoreBreakdown {
 }
 
 export interface MatchResult {
-  score: number;           // 0-100
+  score: number;           
   level: MatchLevel;
   breakdown: MatchScoreBreakdown;
-  reasons: string[];       // Positive match points
-  warnings: string[];      // Concerns/gaps
-  improvementTips: string[]; // Tips for candidate to improve match
-  generatedInterviewQuestions: string[]; // Targeted questions from warnings
+  reasons: string[];       
+  warnings: string[];    
+  improvementTips: string[]; 
+  generatedInterviewQuestions: string[]; 
 }
 
 export type MatchLevel =
-  | "excellent"    // 85-100
-  | "strong"       // 70-84
-  | "possible"     // 55-69
-  | "weak"         // 40-54
-  | "poor";        // 0-39
+  | "excellent"   
+  | "strong"       
+  | "possible"    
+  | "weak"         
+  | "poor";       
 
 export const MATCH_LEVEL_CONFIG: Record<MatchLevel, { label: string; color: string; bg: string }> = {
   excellent: { label: "Отличный мэтч", color: "text-emerald-700", bg: "bg-emerald-100" },
@@ -42,9 +37,7 @@ export const MATCH_LEVEL_CONFIG: Record<MatchLevel, { label: string; color: stri
   poor:      { label: "Плохой мэтч",   color: "text-red-700",     bg: "bg-red-100"     },
 };
 
-// ──────────────────────────────────────────────────────────────────────────────
-// NEARBY DISTRICTS (Aktau microdistrict proximity)
-// ──────────────────────────────────────────────────────────────────────────────
+
 
 const NEARBY_DISTRICTS: Record<string, string[]> = {
   "14 мкр": ["13 мкр", "15 мкр", "17 мкр", "16 мкр"],
@@ -104,11 +97,11 @@ function availabilityScore(candidate: any, job: any): { awarded: number; label: 
 
   if (!jobSchedule) return { awarded: 4, label: "График не указан" };
 
-  // Direct match
+
   if (candidateSchedules.some((s: string) => s.toLowerCase().includes(jobSchedule.toLowerCase()) || jobSchedule.toLowerCase().includes(s.toLowerCase()))) {
     return { awarded: 15, label: "График полностью совместим" };
   }
-  // Partial: candidate wants flexible, or student + 2/2
+
   const isFlexible = candidateSchedules.some(s => s.toLowerCase().includes("гибк") || s.toLowerCase().includes("подраб"));
   if (isFlexible && ["2/2", "Гибкий"].includes(jobSchedule)) {
     return { awarded: 12, label: "График подходит при гибком подходе" };
@@ -134,7 +127,7 @@ function experienceScore(candidate: any, job: any): { awarded: number; label: st
   if (jobRequiresExp && hasExp) {
     return { awarded: 10, label: "Кандидат имеет требуемый опыт" };
   }
-  // Requires exp but candidate doesn't have it
+ 
   return { awarded: 2, label: "Вакансия требует опыт, у кандидата его нет" };
 }
 
@@ -217,9 +210,7 @@ function trustSafetyScore(job: any): { awarded: number; label: string } {
   return { awarded: 0, label: "Низкий или неизвестный Trust Score" };
 }
 
-// ──────────────────────────────────────────────────────────────────────────────
-// Main exported functions
-// ──────────────────────────────────────────────────────────────────────────────
+
 
 export function getMatchBreakdown(candidate: any, job: any): MatchScoreBreakdown {
   const loc = locationScore(candidate, job);
@@ -326,7 +317,7 @@ export function generateInterviewQuestions(candidate: any, job: any): string[] {
     questions.push("Текущая зарплата ниже ваших ожиданий. Готовы ли рассмотреть с перспективой роста?");
   }
 
-  // Always add a general question
+
   questions.push(`Почему вас интересует работа в сфере ${job.category}?`);
 
   return questions;

@@ -1,8 +1,6 @@
 import { CandidateProfile, CandidateRating, EmployerProfile, EmployerRating } from "./types";
 
-// =============================================
-// MOCK CANDIDATES
-// =============================================
+
 
 export const MOCK_CANDIDATES: (Partial<CandidateProfile> & { name: string; rating: CandidateRating })[] = [
   {
@@ -162,9 +160,7 @@ export const MOCK_CANDIDATES: (Partial<CandidateProfile> & { name: string; ratin
   },
 ];
 
-// =============================================
-// MOCK EMPLOYERS
-// =============================================
+
 
 export const MOCK_EMPLOYERS: (Partial<EmployerProfile> & { name: string; rating: EmployerRating })[] = [
   {

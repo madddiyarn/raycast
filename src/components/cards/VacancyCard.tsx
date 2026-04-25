@@ -9,7 +9,7 @@ import Link from "next/link";
 export function VacancyCard({ job, matchScore }: { job: Job; matchScore?: number }) {
   return (
     <Card className="group hover:shadow-xl transition-all duration-300 relative overflow-hidden border border-slate-100 rounded-2xl bg-white">
-      {/* Subtle accent top line */}
+      {}
       <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-violet-500 to-indigo-500" />
 
       <CardHeader className="pb-2 pt-5">
