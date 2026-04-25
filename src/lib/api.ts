@@ -2,7 +2,7 @@ import { Job, CandidateProfile, Application } from "./types";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-// Legacy mock data (minimal stubs to keep API compatibility)
+
 const mockJobs: any[] = [];
 const mockCandidates: any[] = [];
 const mockSources: any[] = [];
