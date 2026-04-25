@@ -1,7 +1,7 @@
 import { Job, CandidateProfile, Application, EmployerProfile } from "./types";
 import { MOCK_CANDIDATES, MOCK_EMPLOYERS } from "./mock-candidates";
 
-// 1. Mock Candidates (includes Aliyah as requested)
+
 export const mockCandidates: any[] = [
   ...MOCK_CANDIDATES,
   {
@@ -20,7 +20,7 @@ export const mockCandidates: any[] = [
       completedShifts: 0,
       employerFeedbackAvg: 0
     },
-    // For demo AI parsing:
+   
     aiHeadline: "Студент без опыта, готова к обучению",
     aiSummary: "Ищет подработку после 16:00 в сфере HoReCa или Retail. Отлично владеет русским и знает казахский на базовом уровне. Проактивная, с высокой скоростью ответов.",
     languages: [
@@ -34,10 +34,9 @@ export const mockCandidates: any[] = [
   }
 ];
 
-// 2. Mock Employers
 export const mockEmployers: EmployerProfile[] = MOCK_EMPLOYERS as unknown as EmployerProfile[];
 
-// 3. Mock Jobs (12-15 diverse jobs)
+
 export const mockJobs: Job[] = [
   {
     id: "job-1", title: "Бариста", description: "Ищу бариста с опытом и без (научим). Варить кофе, поддерживать чистоту.",
@@ -139,9 +138,9 @@ export const mockJobs: Job[] = [
 
 export const mockSources: any[] = [];
 
-// Helper to reliably return 12-15+ jobs even if DB is empty
+
 export function getHybridJobs(dbJobs: Job[]): Job[] {
-  // Try to use DB jobs, but if there's less than 12, merge with mock jobs to guarantee rich UI
+
   const merged = [...dbJobs];
   const dbIds = new Set(dbJobs.map(j => j.id));
   
