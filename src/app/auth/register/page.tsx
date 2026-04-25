@@ -16,7 +16,6 @@ export default function RegisterPage() {
   const [role, setRole] = useState<UserRole>("candidate");
   const [loading, setLoading] = useState(false);
   
-  // Data
   const [fullName, setFullName] = useState("");
   const [telegramUsername, setTelegramUsername] = useState("");
   const [phone, setPhone] = useState("");
