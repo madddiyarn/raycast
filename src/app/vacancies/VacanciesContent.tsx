@@ -35,7 +35,7 @@ export default function VacanciesContent({ initialJobs }: { initialJobs: any[] }
   const [viewMode, setViewMode] = useState<"list" | "map">("list");
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
-  // Find demo user Aliya
+  
   const demoUser = MOCK_CANDIDATES.find(c => c.name === "Алия") || MOCK_CANDIDATES[0];
 
   const toggleDistrict = (d: string) =>

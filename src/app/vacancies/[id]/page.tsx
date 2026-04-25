@@ -20,7 +20,7 @@ export default async function VacancyDetailPage({ params }: { params: Promise<{ 
   }
 
   if (!job) {
-    // Fallback to our hybrid mock jobs for the demo if not in DB or DB failed
+    
     const { getHybridJobs } = require("@/lib/mock-data");
     const mockJobs = getHybridJobs([]);
     job = mockJobs.find((j: any) => j.id === id);
@@ -30,7 +30,7 @@ export default async function VacancyDetailPage({ params }: { params: Promise<{ 
     notFound();
   }
 
-  // Use "Алия" as our demo candidate for this view
+  
   const demoCandidate = MOCK_CANDIDATES.find(c => c.name === "Алия") || MOCK_CANDIDATES[0];
   const matchResult = getFullMatchResult(demoCandidate, job);
 
