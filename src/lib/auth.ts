@@ -102,6 +102,6 @@ export async function completeEmployerOnboarding(profileData: Partial<EmployerPr
   const current = getCurrentUser();
   if (!current) throw new Error("Not logged in");
   
-  // Here we would save profileData to DB
+  
   await updateUserProfile({ onboardingCompleted: true });
 }
