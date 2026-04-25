@@ -22,7 +22,7 @@ export default function ProfilePage() {
 
   if (!user) return null;
 
-  // Use Aliya demo candidate data
+  
   const mockData = mockCandidates.find(c => c.userId === "cand_aliya") || mockCandidates[0];
   const rating = mockData.rating;
   const score = rating.workScore;
@@ -30,7 +30,7 @@ export default function ProfilePage() {
   const badges = rating.badges;
   const tips = getCandidateImprovementTips(mockData as any);
 
-  // Opportunity unlocking mock
+  
   const opportunities = [
     { action: "Добавьте казахский язык", locked: 7, category: "Service" },
     { action: "Укажите выходные дни", locked: 12, category: "Shift" },
