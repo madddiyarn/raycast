@@ -74,7 +74,7 @@ model TelegramSession {
   id          String   @id @default(cuid())
   chatId      String   @unique
   state       String   @default("IDLE")
-  data        Json?    // Stores parsed vacancy data, missing fields, etc.
+  data        Json?    
   lastMessage DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
