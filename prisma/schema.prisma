@@ -48,3 +48,12 @@ model Job {
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 }
+
+model TelegramSession {
+  id          String   @id @default(cuid())
+  chatId      String   @unique
+  state       String   @default("IDLE")
+  data        Json?    // Stores parsed vacancy data, missing fields, etc.
+  lastMessage DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
