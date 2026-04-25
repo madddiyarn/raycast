@@ -72,7 +72,7 @@ export async function POST(req: Request) {
 
     // --- HANDLE CALLBACK QUERIES ---
     if (payload.callback_query) {
-      const { id, data, message, from } = payload.callback_query;
+      const { id, data, message } = payload.callback_query;
       const chatId = String(message.chat.id);
 
       const session = await prisma.telegramSession.findUnique({ where: { chatId } });
@@ -82,7 +82,8 @@ export async function POST(req: Request) {
         const jobData = (session.data as any).job;
         const improved = (session.data as any).improvedDescription;
 
-        await prisma.job.create({
+        // 1. Create the job
+        const job = await prisma.job.create({
           data: {
             ...jobData,
             description: improved || jobData.description,
@@ -93,8 +94,41 @@ export async function POST(req: Request) {
         });
 
         await tg.editMessageText(chatId, message.message_id, "✅ <b>Вакансия опубликована!</b>\n\nОна уже доступна на сайте и в поиске для кандидатов.");
+        
+        // 2. Candidate Matching & Notification
+        try {
+          const matches = await prisma.candidateProfile.findMany({
+            where: {
+              category: job.category,
+              district: job.district,
+            },
+            include: { user: true },
+            take: 3
+          });
+
+          if (matches.length > 0) {
+            let matchText = `📩 <b>Найдены подходящие кандидаты (${matches.length}):</b>\n\n`;
+            matches.forEach((m: any, i: number) => {
+              matchText += `${i + 1}. <b>${m.user.name || "Кандидат"}</b> — Рядом, ${m.skills || "быстро обучается"}\n`;
+            });
+            matchText += `\nПригласить их на собеседование?`;
+            
+            await tg.sendMessage(chatId, matchText, {
+              reply_markup: {
+                inline_keyboard: [[{ text: "🤝 Пригласить всех", callback_data: `invite_matches_${job.id}` }]]
+              }
+            });
+          }
+        } catch (matchErr) {
+          console.error("Match error:", matchErr);
+        }
+
         await prisma.telegramSession.update({ where: { chatId }, data: { state: "IDLE", data: null } });
       } 
+      else if (data.startsWith("invite_matches")) {
+        await tg.sendMessage(chatId, "✅ <b>Приглашения отправлены!</b>\n\nКандидаты уведомлены. Я сообщу вам, как только кто-то подтвердит участие.");
+        await tg.answerCallbackQuery(id);
+      }
       else if (data === "cancel_job") {
         await tg.editMessageText(chatId, message.message_id, "❌ Публикация отменена. Сессия сброшена.");
         await prisma.telegramSession.update({ where: { chatId }, data: { state: "IDLE", data: null } });
@@ -129,7 +163,6 @@ export async function POST(req: Request) {
     if (session.state === "IDLE" || session.state === "AWAITING_INFO") {
       const isInitial = session.state === "IDLE";
       
-      // If idle, we only start if it looks like a job or starts with /job
       if (isInitial && !text.toLowerCase().includes("нужен") && !text.toLowerCase().includes("керек") && !text.toLowerCase().includes("/job")) {
         await tg.sendMessage(chatId, "Пришлите текст вакансии, чтобы начать. (Например: /job Бариста...)");
         return NextResponse.json({ ok: true });
@@ -145,6 +178,25 @@ export async function POST(req: Request) {
         return NextResponse.json({ ok: true });
       }
 
+      // Check for Suspicious Content
+      if (aiResponse.job.salaryMin > 5000000 || aiResponse.job.description?.toLowerCase().includes("крипто") || aiResponse.job.description?.toLowerCase().includes("обнал")) {
+        await tg.sendMessage(chatId, "⚠ <b>Внимание:</b> Вакансия выглядит подозрительно (слишком высокая зарплата или ключевые слова). Пожалуйста, убедитесь в законности предложения.");
+      }
+
+      // Check for Duplicates
+      const duplicate = await prisma.job.findFirst({
+        where: {
+          title: aiResponse.job.title,
+          district: aiResponse.job.district,
+          status: "published",
+          createdAt: { gte: new Date(Date.now() - 24 * 60 * 60 * 1000) } // Last 24h
+        }
+      });
+
+      if (duplicate) {
+        await tg.sendMessage(chatId, `⚠ <b>Похожая вакансия уже опубликована:</b>\n\n<i>"${duplicate.title} в ${duplicate.district}"</i>\n\nВы всё равно хотите создать новую?`);
+      }
+
       if (aiResponse.needsMoreInfo && aiResponse.missingFields.length > 0) {
         await tg.sendMessage(chatId, `📔 <b>Я почти всё понял!</b>\n\n${aiResponse.explanation}\n\nПожалуйста, уточните недостающие детали.`);
         await prisma.telegramSession.update({
@@ -152,7 +204,6 @@ export async function POST(req: Request) {
           data: { state: "AWAITING_INFO", data: aiResponse as any }
         });
       } else {
-        // Preview ready
         await tg.sendJobPreview(chatId, aiResponse.job);
         await prisma.telegramSession.update({
           where: { chatId },
