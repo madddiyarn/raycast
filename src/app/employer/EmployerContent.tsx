@@ -33,7 +33,6 @@ export default function EmployerContent({ jobs, jobsCount }: { jobs: Job[]; jobs
   const tips = getEmployerImprovementTips(empData as any);
   const breakdown = empData.rating.scoreBreakdown;
 
-  // Use the first job as the demo context for matching
   const demoJob = jobs[0] || { title: "Бариста", category: "HoReCa", district: "14 мкр", schedule: "2/2", salaryMin: 150000 };
 
   const scheduleInterview = () => {
@@ -41,7 +40,6 @@ export default function EmployerContent({ jobs, jobsCount }: { jobs: Job[]; jobs
     setTimeout(() => { setScheduleState("success"); setTimeout(() => { setShowInterviewModal(false); setScheduleState("idle"); }, 2000); }, 1500);
   };
 
-  // AI Hiring Coach suggestions
   const coachSuggestions = [
     { icon: "💰", text: "Добавьте зарплату к вакансиям без указанной оплаты — это увеличит отклики на 40%", priority: "high" },
     { icon: "📍", text: "Укажите точный микрорайон для каждой вакансии — кандидатам важна близость к дому", priority: "medium" },
