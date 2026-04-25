@@ -10,9 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loader2, ArrowRight, ArrowLeft, Bot, Sparkles, Building2, MapPin, Globe, Briefcase, Calendar, DollarSign, Star, CheckCircle2, Zap } from "lucide-react";
 
-// =============================================
-// DATA CONSTANTS
-// =============================================
+
 
 const CATEGORY_DATA = [
   { name: "HoReCa", emoji: "☕", roles: ["бариста", "официант", "помощник кухни"] },
@@ -45,9 +43,7 @@ const TIME_SLOTS = ["08:00–12:00", "12:00–16:00", "16:00–20:00", "20:00–
 
 const SCHEDULES = ["2/2", "5/2", "6/1", "Гибкий", "Вечерние", "Выходные"];
 
-// =============================================
-// COMPONENT
-// =============================================
+
 
 export default function OnboardingPage() {
   const router = useRouter();
@@ -57,7 +53,7 @@ export default function OnboardingPage() {
   const [saving, setSaving] = useState(false);
   const [step, setStep] = useState(1);
 
-  // ---- CANDIDATE STATE ----
+ 
   const [selectedCategories, setSelectedCategories] = useState<Record<string, string>>({});
   const [selectedSkills, setSelectedSkills] = useState<Record<string, string>>({});
   const [customSkill, setCustomSkill] = useState("");
@@ -79,7 +75,7 @@ export default function OnboardingPage() {
   const [wantsFirstJob, setWantsFirstJob] = useState(true);
   const [wantsVerified, setWantsVerified] = useState(false);
 
-  // ---- EMPLOYER STATE ----
+  
   const [businessName, setBusinessName] = useState("");
   const [businessCategory, setBusinessCategory] = useState("HoReCa");
   const [empDistrict, setEmpDistrict] = useState("14 мкр");
@@ -167,9 +163,7 @@ export default function OnboardingPage() {
     </motion.div>
   );
 
-  // =============================================
-  // CANDIDATE STEPS
-  // =============================================
+ 
 
   const candidateSteps: Record<number, React.ReactNode> = {
     1: (
@@ -441,9 +435,7 @@ export default function OnboardingPage() {
     })(),
   };
 
-  // =============================================
-  // EMPLOYER STEPS
-  // =============================================
+
 
   const employerSteps: Record<number, React.ReactNode> = {
     1: (
