@@ -18,7 +18,16 @@ export default function SearchClient({ initialJobs, initialCandidate }: { initia
   const [applyState, setApplyState] = useState<"idle" | "loading" | "success">("idle");
 
   useEffect(() => {
-    const enhanced = enhanceJobsWithAI(initialJobs, initialCandidate);
+    // Attempt to load current user from localStorage since the server doesn't have it in this MVP
+    const savedUser = typeof window !== "undefined" ? localStorage.getItem("jumys_user") : null;
+    let candidate = initialCandidate;
+    try {
+      if (savedUser) candidate = JSON.parse(savedUser);
+    } catch (e) {
+      console.error("Failed to parse saved user:", e);
+    }
+    
+    const enhanced = enhanceJobsWithAI(initialJobs, candidate);
     setJobs(enhanced);
     setLoading(false);
   }, [initialJobs, initialCandidate]);

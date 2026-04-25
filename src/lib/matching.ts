@@ -58,6 +58,7 @@ const NEARBY_DISTRICTS: Record<string, string[]> = {
 };
 
 function locationScore(candidate: any, job: any): { awarded: number; label: string } {
+  if (!candidate) return { awarded: 7, label: "Профиль не загружен" };
   const preferred: string[] = candidate.preferredDistricts ?? [];
   const jobDistrict: string = job.district ?? "";
   if (!jobDistrict) return { awarded: 4, label: "Район не указан" };
@@ -76,6 +77,7 @@ function locationScore(candidate: any, job: any): { awarded: number; label: stri
 }
 
 function categoryScore(candidate: any, job: any): { awarded: number; label: string } {
+  if (!candidate) return { awarded: 0, label: "Интересы не указаны" };
   const preferred: string[] = candidate.preferredCategories ?? candidate.interests?.map((i: any) => i.category) ?? [];
   const jobCat: string = job.category ?? "";
   if (!jobCat) return { awarded: 6, label: "Категория вакансии не указана" };
@@ -84,7 +86,7 @@ function categoryScore(candidate: any, job: any): { awarded: number; label: stri
   const medInterest = preferred.slice(2, 5);
 
   if (highInterest.includes(jobCat)) {
-    return { awarded: 15, label: `Высокий интерес кандидата к категории ${jobCat}` };
+    return { awarded: 15, label: `Высокий интерес продукта к категории ${jobCat}` };
   }
   if (medInterest.includes(jobCat)) {
     return { awarded: 10, label: `Средний интерес к ${jobCat}` };
@@ -96,6 +98,7 @@ function categoryScore(candidate: any, job: any): { awarded: number; label: stri
 }
 
 function availabilityScore(candidate: any, job: any): { awarded: number; label: string } {
+  if (!candidate) return { awarded: 4, label: "График не указан кандидатом" };
   const candidateSchedules: string[] = candidate.availableSchedules ?? candidate.employmentTypes ?? [];
   const jobSchedule: string = job.schedule ?? "";
 
@@ -117,6 +120,7 @@ function availabilityScore(candidate: any, job: any): { awarded: number; label: 
 }
 
 function experienceScore(candidate: any, job: any): { awarded: number; label: string } {
+  if (!candidate) return { awarded: 5, label: "Опыт не указан" };
   const hasExp = (candidate.experienceLevel ?? "").toLowerCase().includes("опыт") && 
                  !(candidate.experienceLevel ?? "").toLowerCase().includes("без");
   const jobRequiresExp: boolean = job.experienceRequired ?? false;
@@ -135,6 +139,7 @@ function experienceScore(candidate: any, job: any): { awarded: number; label: st
 }
 
 function skillsScore(candidate: any, job: any): { awarded: number; label: string } {
+  if (!candidate) return { awarded: 4, label: "Навыки не указаны" };
   const candidateSkills: string[] = (candidate.skills ?? []).map((s: any) => (typeof s === "string" ? s : s.name).toLowerCase());
   const requiredSkills: string[] = (job.requiredSkills ?? job.skills ?? []).map((s: string) => s.toLowerCase());
 
@@ -152,6 +157,7 @@ function skillsScore(candidate: any, job: any): { awarded: number; label: string
 }
 
 function languageScore(candidate: any, job: any): { awarded: number; label: string } {
+  if (!candidate) return { awarded: 3, label: "Языки не указаны" };
   const candidateLangs: any[] = candidate.languages ?? [];
   const requiredLangs: string[] = job.requiredLanguages ?? [];
 
@@ -172,6 +178,7 @@ function languageScore(candidate: any, job: any): { awarded: number; label: stri
 }
 
 function salaryScore(candidate: any, job: any): { awarded: number; label: string } {
+  if (!candidate) return { awarded: 3, label: "Ожидания не указаны" };
   const expectation: number = candidate.salaryExpectation ?? 0;
   const jobMin: number = job.salaryMin ?? 0;
   const jobMax: number = job.salaryMax ?? jobMin;
@@ -186,6 +193,7 @@ function salaryScore(candidate: any, job: any): { awarded: number; label: string
 }
 
 function studentFitScore(candidate: any, job: any): { awarded: number; label: string } {
+  if (!candidate) return { awarded: 3, label: "Для всех категорий" };
   const isStudent = (candidate.experienceLevel ?? "").toLowerCase().includes("студент") ||
     (candidate.rating?.badges ?? []).some((b: any) => b.id === "student");
   const jobStudentFriendly: boolean = job.studentFriendly ?? false;
